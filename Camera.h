@@ -21,6 +21,7 @@ public:
 
 	void Render(Scene &s);
 	void SaveBitmap(char *filename);
+	void RenderPixel(int x, int y, Scene &s);
 
 
 private:
