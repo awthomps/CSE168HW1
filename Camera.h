@@ -9,6 +9,7 @@
 #include "Bitmap.h"
 #include "Scene.h"
 #include "Material.h"
+#include <iostream>
 
 class Camera
 {

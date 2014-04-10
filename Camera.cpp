@@ -46,11 +46,16 @@ void Camera::Render(Scene &s) {
 	bottomLeft = WorldMatrix.d - WorldMatrix.c - modifiedB - modifiedA;
 	bottomLeft.Print();
 	right = (topRight - topLeft);
+	std::cout << "Directional Vectors: " << std::endl;
+	right.Print();
 	rightDelta = right.Magnitude() / XRes;
 	right.Normalize();
-	down = (bottomLeft - topRight);
+	//right.Print();
+	down = (bottomLeft - topLeft);
+	down.Print();
 	downDelta = down.Magnitude() / YRes;
 	down.Normalize();
+	//down.Print();
 
 	for (int y = 0; y < YRes; ++y) {
 		for (int x = 0; x < XRes; ++x) {
@@ -68,10 +73,12 @@ void Camera::RenderPixel(int x, int y, Scene &s) {
 	
 	//compute ray direction:
 
-	sentRay.Direction = topRight;
+	sentRay.Direction = topLeft;
 	sentRay.Direction.AddScaled(right, (x + 0.5) * rightDelta);
 	sentRay.Direction.AddScaled(down, (y + 0.5) * downDelta);
+	//sentRay.Direction.Print();
 	sentRay.Direction = sentRay.Direction - WorldMatrix.d;
+	//sentRay.Direction.Print();
 	sentRay.Direction.Normalize();
 	//sentRay.Direction.Print();
 
