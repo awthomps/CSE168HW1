@@ -26,6 +26,7 @@ void Camera::LookAt(Vector3 &pos, Vector3 &target, Vector3 &up) {
 	WorldMatrix.a.Cross(up, WorldMatrix.c);
 	WorldMatrix.a.Normalize();
 	WorldMatrix.b.Cross(WorldMatrix.c, WorldMatrix.a);
+	WorldMatrix.b.Print("B");
 }
 
 void Camera::Render(Scene &s) {
@@ -83,6 +84,7 @@ void Camera::RenderPixel(int x, int y, Scene &s) {
 	//sentRay.Direction.Print();
 
 	Intersection hit;
+	hit.HitDistance = 1000;
 	if (!s.Intersect(sentRay, hit)) {
 		//no hits so skycolor:
 		BMP.SetPixel(x, y, s.GetSkyColor().ToInt());
@@ -91,15 +93,25 @@ void Camera::RenderPixel(int x, int y, Scene &s) {
 		Color newColor = Color(0.0,0.0,0.0);
 		//compute color with lighting:
 		for (int i = 0; i < s.GetNumLights(); ++i) {
+
+			//TODO: this is wrong, find the equation here on wikipedia!
+			//http://en.wikipedia.org/wiki/Lambertian_reflectance#Use_in_computer_graphics
+
 			Color lightColor, matColor;
 			Vector3 toLight, ItPos, in, out, currentColor;
 			float intensity = s.GetLight(i).Illuminate(hit.Position, lightColor, toLight, ItPos);
 			hit.Mtl->ComputeReflectance(matColor, in, out, hit);
 			lightColor.Multiply(matColor);
+			currentColor = hit.Normal;
+			toLight.Scale(-intensity);
+			currentColor.Dot(toLight);
+
+			/*
 			currentColor = lightColor.getInVector3();
-			currentColor.Dot(-toLight);
+			currentColor = currentColor.Dot(-toLight);
 			currentColor.Dot(hit.Normal);
 			currentColor.Scale(intensity);
+			*/
 			newColor.Add(currentColor);
 		}
 		BMP.SetPixel(x, y, newColor.ToInt());
