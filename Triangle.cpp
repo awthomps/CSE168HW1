@@ -57,7 +57,7 @@ bool Triangle::Intersect(const Ray &ray, Intersection &hit) const {
 
 	//make sure that t is positive and it is less than hitdistance:
 	//printf("t = %d\n", t);
-	if (t < 0 && t >= hit.HitDistance) return false;
+	if ((t < 0) || (t >= hit.HitDistance)) return false;
 
 	hit.HitDistance = t;
 	hit.Mtl = Mtl;

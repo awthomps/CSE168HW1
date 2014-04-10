@@ -34,7 +34,7 @@ private:
 	float VerticalFOV;
 	float Aspect;
 	Bitmap BMP;
-	Vector3 topLeft, topRight, bottomLeft, right, down;
+	Vector3 topLeft, topRight, bottomLeft, bottomRight, right, up;
 	float rightDelta;
 	float downDelta;
 };
