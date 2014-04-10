@@ -5,8 +5,10 @@
 #define CSE168_CAMERA_H
 
 #include "Matrix34.h"
+#include "Vector3.h"
 #include "Bitmap.h"
 #include "Scene.h"
+#include "Material.h"
 
 class Camera
 {
@@ -31,6 +33,9 @@ private:
 	float VerticalFOV;
 	float Aspect;
 	Bitmap BMP;
+	Vector3 topLeft, topRight, bottomLeft, right, down;
+	float rightDelta;
+	float downDelta;
 };
 
 #endif

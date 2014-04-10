@@ -6,6 +6,7 @@
 #define CSE168_COLOR_H
 
 #include "Core.h"
+#include "Vector3.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -13,6 +14,7 @@ class Color {
 public:
 	Color()									{Red=Green=Blue=1.0;}
 	Color(float r,float g,float b)			{Red=r; Green=g; Blue=b;}
+	Color(Vector3 c)						{ Red = c.x; Green = c.y, Blue = c.z; }
 
 	void Set(float r,float g,float b)		{Red=r; Green=g; Blue=b;}
 
@@ -21,6 +23,7 @@ public:
 	void Scale(float s)						{Red*=s; Green*=s; Blue*=s;}
 	void Scale(const Color c,float s)		{Red=s*c.Red; Green=s*c.Green; Blue=s*c.Blue;}
 	void Multiply(const Color c)			{Red*=c.Red; Green*=c.Green; Blue*=c.Blue;}
+	Vector3 getInVector3()					{ return Vector3(Red, Green, Blue); }
 
 	int ToInt() {
 		int r=(Red<0) ? 0 : ((Red>=1.0) ? 255 : int(Red*256.0f));

@@ -1,6 +1,7 @@
 
 
 #include "Triangle.h"
+#include <iostream>
 
 
 Triangle::Triangle() {};
@@ -49,8 +50,8 @@ bool Triangle::Intersect(const Ray &ray, Intersection &hit) const {
 	crossResult.Cross(crossResult, cMa);
 	float t = pMa.Dot(crossResult) / DetM;
 
-	//make sure tht t is positive:
-	if (t < 0) return false;
+	//make sure that t is positive and it is less than hitdistance:
+	if (t < 0 && t >= hit.HitDistance) return false;
 
 	hit.HitDistance = t;
 	hit.Mtl = Mtl;
@@ -65,5 +66,6 @@ bool Triangle::Intersect(const Ray &ray, Intersection &hit) const {
 	Vector3 nC = Vtx[2]->Normal;
 	nC.Scale(1 - alpha - beta);
 	hit.Normal = nA + nB + nC;
+	//std::cout << "hit" << std::endl;
 	return true;
 }
