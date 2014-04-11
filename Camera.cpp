@@ -84,11 +84,14 @@ void Camera::RenderPixel(int x, int y, Scene &s) {
 		BMP.SetPixel(x, y, s.GetSkyColor().ToInt());
 	}
 	else {
+		Color test;
+		Vector3 inT, outT;
+		hit.Mtl->ComputeReflectance(test, inT, outT, hit);
 		Color newColor = Color(0.0,0.0,0.0);
+		//newColor = test;
 		//compute color with lighting:
 		for (int i = 0; i < s.GetNumLights(); ++i) {
 
-			//TODO: this is wrong, find the equation here on wikipedia!
 			//http://en.wikipedia.org/wiki/Lambertian_reflectance#Use_in_computer_graphics
 
 			Color lightColor, matColor, C;

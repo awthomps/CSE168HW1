@@ -68,9 +68,9 @@ bool Triangle::Intersect(const Ray &ray, Intersection &hit) const {
 	Vector3 nA = Vtx[0]->Normal;
 	nA.Scale(1 - alpha - beta);
 	Vector3 nB = Vtx[1]->Normal;
-	nB.Scale(1 - alpha - beta);
+	nB.Scale(alpha);
 	Vector3 nC = Vtx[2]->Normal;
-	nC.Scale(1 - alpha - beta);
+	nC.Scale(beta);
 	hit.Normal = nA + nB + nC;
 	//std::cout << "hit" << std::endl;
 	return true;
