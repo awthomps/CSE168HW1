@@ -20,7 +20,7 @@ public:
 		return Intensity;
 	}
 
-	void SetDirection(Vector3 dir) { Direction = dir; }
+	void SetDirection(Vector3 dir) { Direction = dir; Direction.Normalize(); }
 
 private:
 	Vector3 Direction;

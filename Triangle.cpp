@@ -73,5 +73,6 @@ bool Triangle::Intersect(const Ray &ray, Intersection &hit) const {
 	nC.Scale(beta);
 	hit.Normal = nA + nB + nC;
 	//std::cout << "hit" << std::endl;
+	hit.Normal.Normalize();
 	return true;
 }
