@@ -62,7 +62,7 @@ void project1() {
 	// Create camera
 	Camera cam;
 	cam.LookAt(Vector3(2.0f, 2.0f, 5.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f));
-	cam.SetResolution(800,600);
+	cam.SetResolution(800, 600);
 	cam.SetFOV(40.0f);
 	cam.SetAspect(1.33f);
 

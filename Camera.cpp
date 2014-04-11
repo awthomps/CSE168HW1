@@ -18,6 +18,7 @@ void Camera::SetAspect(float a) {
 void Camera::SetResolution(int x, int y) {
 	XRes = x;
 	YRes = y;
+	BMP.Resize(x, y);
 }
 void Camera::LookAt(Vector3 &pos, Vector3 &target, Vector3 &up) {
 	WorldMatrix.d = pos;
@@ -84,26 +85,17 @@ void Camera::RenderPixel(int x, int y, Scene &s) {
 		BMP.SetPixel(x, y, s.GetSkyColor().ToInt());
 	}
 	else {
-		Color test;
-		Vector3 inT, outT;
-		hit.Mtl->ComputeReflectance(test, inT, outT, hit);
 		Color newColor = Color(0.0,0.0,0.0);
-		//newColor = test;
-		//compute color with lighting:
 		for (int i = 0; i < s.GetNumLights(); ++i) {
-
-			//http://en.wikipedia.org/wiki/Lambertian_reflectance#Use_in_computer_graphics
-
-			Color lightColor, matColor, C;
+			//compute lighting with this light 
+			Color lightColor, C;
 			Vector3 toLight, ItPos, in, out;
 			float intensity = s.GetLight(i).Illuminate(hit.Position, lightColor, toLight, ItPos);
-			hit.Mtl->ComputeReflectance(matColor, in, out, hit);
 			C = lightColor;
-			C.Multiply(matColor);
-
 			float dotResult = (toLight).Dot(hit.Normal);
 			C.Scale(((dotResult < 0) ? 0 : dotResult) * intensity);
 
+			//add this lighting to the pixel
 			newColor.Add(C);
 		}
 		BMP.SetPixel(x, y, newColor.ToInt());
